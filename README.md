@@ -7,23 +7,30 @@
 
 This project is a **Microservices-based Restaurant and Order Management System** built using Spring Boot.
 
-The system consists of two independent microservices:
+The system consists of two independent services:
 
-- 🏬 Restaurant Service
-- 📦 Order Service
+- 🏬 **Restaurant Service**
+- 📦 **Order Service**
 
-Each service runs independently on different ports and communicates using REST APIs.
+Each service runs independently on different ports and communicates via REST APIs.  
+The Order Service fetches restaurant details from the Restaurant Service to process orders.
 
 This project demonstrates:
+
 - Microservices architecture
 - Inter-service communication
-- RESTful API design
+- RESTful API development
 - Database integration
 - Swagger API documentation
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture Diagram
+
+![Architecture Diagram](![Uploading RestaurantOrderArchitecture.png…]()
+)
+
+### 🔎 Architecture Flow
 
 ```
 Client
@@ -35,20 +42,21 @@ Restaurant Service (Port: 9999)
 Database
 ```
 
-- The **Order Service** communicates with the Restaurant Service to fetch restaurant details.
+- The **Order Service** calls the Restaurant Service using REST APIs.
 - Services are loosely coupled and independently deployable.
+- Each service follows layered architecture (Controller → Service → Repository).
 
 ---
 
 ## 🛠️ Tech Stack
 
-- Java
-- Spring Boot
-- REST APIs
-- Maven
-- MySQL / H2
-- Swagger (OpenAPI)
-- RestTemplate (for inter-service communication)
+- ☕ Java
+- 🌱 Spring Boot
+- 🌐 REST APIs
+- 📦 Maven
+- 🗄️ MySQL / H2 Database
+- 📘 Swagger (OpenAPI)
+- 🔁 RestTemplate (Inter-service communication)
 
 ---
 
@@ -65,11 +73,25 @@ Database
 
 After starting the services:
 
-- Order Service Swagger:  
+- **Order Service Swagger**  
   http://localhost:8888/swagger-ui/index.html
 
-- Restaurant Service Swagger:  
+- **Restaurant Service Swagger**  
   http://localhost:9999/swagger-ui/index.html
+
+---
+
+## 📷 Screenshots
+
+### 📦 Order Service – Swagger UI (Port 8888)
+
+![Order Swagger](screenshots/order-swagger.png)
+
+---
+
+### 🏬 Restaurant Service – Swagger UI (Port 9999)
+
+![Restaurant Swagger](screenshots/restaurant-swagger.png)
 
 ---
 
@@ -85,7 +107,7 @@ After starting the services:
 
 - `POST /orders` → Create new order  
 - `GET /orders/{id}` → Get order by ID  
-- Fetches restaurant details from Restaurant Service  
+- Retrieves restaurant details from Restaurant Service  
 
 ---
 
@@ -105,14 +127,14 @@ cd orderservice
 mvn spring-boot:run
 ```
 
-### 3️⃣ Start Restaurant Service (in new terminal)
+### 3️⃣ Start Restaurant Service (in a new terminal)
 
 ```bash
 cd restaurantservice
 mvn spring-boot:run
 ```
 
-### 4️⃣ Test using Swagger UI
+### 4️⃣ Test APIs using Swagger
 
 Open in browser:
 
@@ -124,10 +146,11 @@ Open in browser:
 ## 🎯 Key Features
 
 ✔ Independent microservices  
-✔ RESTful communication between services  
+✔ REST-based service-to-service communication  
 ✔ Swagger API documentation  
-✔ Clean layered architecture (Controller → Service → Repository)  
+✔ Clean layered architecture  
 ✔ Database persistence  
+✔ Modular and scalable design  
 
 ---
 
@@ -149,4 +172,4 @@ Open in browser:
 
 ## ⭐ Conclusion
 
-This project demonstrates a real-world implementation of microservices architecture using Spring Boot, focusing on scalability, modularity, and service-to-service communication.
+This project demonstrates a real-world implementation of microservices architecture using Spring Boot, focusing on scalability, modularity, and independent service deployment.
