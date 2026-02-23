@@ -1,175 +1,192 @@
-# 🍽️ Restaurant & Order Management System  
-### Microservices Architecture using Spring Boot
+# 🍽️ Restaurant Order Services  
 
----
 
-## 📌 Project Overview
 
-This project is a **Microservices-based Restaurant and Order Management System** built using Spring Boot.
+A Spring Boot Microservices-based backend application for managing Restaurants and Orders.
 
-The system consists of two independent services:
+This project demonstrates clean layered architecture, RESTful APIs, independent service deployment, and Swagger documentation.
 
-- 🏬 **Restaurant Service**
-- 📦 **Order Service**
 
-Each service runs independently on different ports and communicates via REST APIs.  
-The Order Service fetches restaurant details from the Restaurant Service to process orders.
+# 📌 Project Overview
 
-This project demonstrates:
+The system is divided into two independent microservices:
 
-- Microservices architecture
-- Inter-service communication
-- RESTful API development
-- Database integration
-- Swagger API documentation
+🏪 Restaurant Service → Runs on Port 9999  
+🛒 Order Service → Runs on Port 8888  
 
----
+Each service:
+- Runs independently
+- Follows layered architecture
+- Exposes REST APIs
+- Uses Swagger for API documentation
 
-## 🏗️ Architecture Diagram
 
-![Architecture Diagram](![Uploading RestaurantOrderArchitecture.png…]()
-)
+# 🏗️ Microservices Architecture Diagram
 
-### 🔎 Architecture Flow
+                         ┌────────────────────────┐
+                         │         Client         │
+                         │   (Postman/Browser)    │
+                         └────────────┬───────────┘
+                                      │
+                    ┌─────────────────┴─────────────────┐
+                    │                                   │
+        ┌────────────────────────┐         ┌────────────────────────┐
+        │   Restaurant Service   │         │      Order Service     │
+        │       Port: 9999       │         │       Port: 8888       │
+        └────────────┬───────────┘         └────────────┬───────────┘
+                     │                                    │
+             ┌───────┴────────┐                  ┌───────┴────────┐
+             │   Controller    │                  │   Controller    │
+             ├─────────────────┤                  ├─────────────────┤
+             │    Service      │                  │    Service      │
+             ├─────────────────┤                  ├─────────────────┤
+             │   Repository    │                  │   Repository    │
+             ├─────────────────┤                  ├─────────────────┤
+             │    Database     │                  │    Database     │
+             └─────────────────┘                  └─────────────────┘
 
-```
-Client
-   ↓
-Order Service (Port: 8888)
-   ↓
-Restaurant Service (Port: 9999)
-   ↓
-Database
-```
+# 🏛️ Layered Architecture (Inside Each Service)
 
-- The **Order Service** calls the Restaurant Service using REST APIs.
-- Services are loosely coupled and independently deployable.
-- Each service follows layered architecture (Controller → Service → Repository).
+Controller → Service → Repository → Database
 
----
+- Controller handles HTTP requests  
+- Service contains business logic  
+- Repository interacts with database  
+- Model represents entities  
 
-## 🛠️ Tech Stack
 
-- ☕ Java
-- 🌱 Spring Boot
-- 🌐 REST APIs
-- 📦 Maven
-- 🗄️ MySQL / H2 Database
-- 📘 Swagger (OpenAPI)
-- 🔁 RestTemplate (Inter-service communication)
+# 🛠️ Tech Stack
 
----
+- Java 17
+- Spring Boot
+- Spring Data JPA
+- Maven
+- MySQL / H2
+- Swagger (OpenAPI)
+- REST APIs
 
-## 🚀 Services & Ports
+# 🚀 Features
 
-| Service | Port | Description |
-|----------|------|-------------|
-| Order Service | 8888 | Handles order creation & retrieval |
-| Restaurant Service | 9999 | Manages restaurant data |
+## 🏪 Restaurant Service
+- Add Restaurant
+- Get Restaurant by ID
+- Get All Restaurants
 
----
+## 🛒 Order Service
+- Create Order
+- Get Order by ID
+- Get Orders by Restaurant ID
+- Add Items
+- Get Items by ID
 
-## 📚 API Documentation (Swagger)
 
-After starting the services:
+# 📡 API Endpoints
 
-- **Order Service Swagger**  
-  http://localhost:8888/swagger-ui/index.html
+## 🔹 Restaurant Service (Port 9999)
 
-- **Restaurant Service Swagger**  
-  http://localhost:9999/swagger-ui/index.html
+| Method | Endpoint | Description |
+|--------|----------|------------|
+| POST | /restaurant | Add new restaurant |
+| GET | /restaurant/{id} | Get restaurant by ID |
+| GET | /restaurant/all | Get all restaurants |
 
----
+Base URL:
+http://localhost:9999
 
-## 📷 Screenshots
 
-### 📦 Order Service – Swagger UI (Port 8888)
+## 🔹 Order Service (Port 8888)
 
-![Order Swagger](screenshots/order-swagger.png)
+| Method | Endpoint | Description |
+|--------|----------|------------|
+| POST | /order | Create new order |
+| GET | /order/{id} | Get order by ID |
+| GET | /order/restaurant/{resId} | Get orders by restaurant |
+| POST | /items | Add item |
+| GET | /items/{id} | Get item by ID |
 
----
+Base URL:
+http://localhost:8888
 
-### 🏬 Restaurant Service – Swagger UI (Port 9999)
 
-![Restaurant Swagger](screenshots/restaurant-swagger.png)
+# ⚙️ How To Run The Project
 
----
+## 1️⃣ Clone Repository
 
-## 📌 Restaurant Service APIs
+git clone https://github.com/sathwik-chotu/restaurant-order-services.git  
+cd restaurant-order-services  
 
-- `GET /restaurants` → Get all restaurants  
-- `GET /restaurants/{id}` → Get restaurant by ID  
-- `POST /restaurants` → Add new restaurant  
 
----
+## 2️⃣ Run Restaurant Service
 
-## 📌 Order Service APIs
+cd restaurantservice  
+mvn spring-boot:run  
 
-- `POST /orders` → Create new order  
-- `GET /orders/{id}` → Get order by ID  
-- Retrieves restaurant details from Restaurant Service  
+Runs at:
+http://localhost:9999
 
----
+## 3️⃣ Run Order Service
 
-## ⚙️ How to Run the Project
+cd orderservice  
+mvn spring-boot:run  
 
-### 1️⃣ Clone the repository
+Runs at:
+http://localhost:8888
 
-```bash
-git clone https://github.com/sathwik-chotu/restaurant-order-services.git
-cd restaurant-order-services
-```
 
-### 2️⃣ Start Order Service
+# 📘 Swagger Documentation
 
-```bash
-cd orderservice
-mvn spring-boot:run
-```
+Restaurant Swagger:
+http://localhost:9999/swagger-ui.html  
 
-### 3️⃣ Start Restaurant Service (in a new terminal)
+Order Swagger:
+http://localhost:8888/swagger-ui.html  
 
-```bash
-cd restaurantservice
-mvn spring-boot:run
-```
 
-### 4️⃣ Test APIs using Swagger
+# 📸 Screenshots
 
-Open in browser:
+## 🏪 Add Restaurant
+<img src="Screenshots/addRestaurant.png" width="900"/>
 
-- http://localhost:8888/swagger-ui/index.html
-- http://localhost:9999/swagger-ui/index.html
 
----
+## 🛒 Add Items
+<img src="Screenshots/addItems.png" width="900"/>
 
-## 🎯 Key Features
 
-✔ Independent microservices  
-✔ REST-based service-to-service communication  
-✔ Swagger API documentation  
-✔ Clean layered architecture  
-✔ Database persistence  
-✔ Modular and scalable design  
+## 📦 Post Order
+<img src="Screenshots/postOrder.png" width="900"/>
 
----
 
-## 📈 Future Improvements
+## 🔎 Get Order By ID
+<img src="Screenshots/getOrderById.png" width="900"/>
 
-- Add API Gateway
-- Add Eureka Service Registry
-- Add Docker & Docker Compose
-- Add JWT Authentication
-- Deploy to cloud (AWS / Azure)
 
----
+## 🔎 Get Items By ID
+<img src="Screenshots/getItemsById.png" width="900"/>
 
-## 👨‍💻 Author
 
-**Sathwik Reddy**
+## 🔎 Get Restaurant By ID
+<img src="Screenshots/getResById.png" width="900"/>
 
----
 
-## ⭐ Conclusion
+## 📘 Restaurant Swagger UI
+<img src="Screenshots/restaurantSwagger.png" width="900"/>
 
-This project demonstrates a real-world implementation of microservices architecture using Spring Boot, focusing on scalability, modularity, and independent service deployment.
+
+## 📘 Order Swagger UI
+<img src="Screenshots/orderSwagger.png" width="900"/>
+
+
+# 🔮 Future Enhancements
+
+- API Gateway
+- Service Registry (Eureka)
+- JWT Authentication
+- Docker Support
+- Cloud Deployment
+- CI/CD Integration
+
+
+# 👨‍💻 Author
+
+Sathwik Reddy  
+GitHub: https://github.com/sathwik-chotu  
